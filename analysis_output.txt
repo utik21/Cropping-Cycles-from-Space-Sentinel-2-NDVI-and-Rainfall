@@ -1,0 +1,158 @@
+
+==============================================================================
+1. DATA AND QUALITY CONTROL
+==============================================================================
+10-day periods: 219 ( 2019-01-01 to 2024-12-20 )
+Periods with < 50% cloud-free cropland (excluded from smoothing): 26 (12%) 
+Unreliable periods by month (all years):
+
+Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec 
+  6   5   1   2   2   1   1   0   0   1   2   5 
+Regency area: 2313 km2; cropland with NDVI data (ESA WorldCover 2021): 949 km2 (41%)
+
+==============================================================================
+2. SMOOTHING AND CROP-CYCLE DETECTION
+==============================================================================
+Weighted smoothing spline (df = 50): RMSE against reliable observations = 0.033 NDVI
+Detected crop cycles (start/end = 20% of NDVI amplitude before/after each peak):
+ trough_before      start       peak        end trough_after peak_NDVI
+    2019-01-01 2019-01-07 2019-02-09 2019-03-21   2019-04-07     0.651
+    2019-04-07 2019-04-19 2019-05-18 2019-09-19   2019-10-28     0.558
+    2019-10-28 2019-12-08 2020-02-25 2020-04-02   2020-04-19     0.613
+    2020-04-19 2020-05-02 2020-06-05 2020-07-17   2020-08-06     0.568
+    2020-10-31 2020-12-01 2021-01-30 2021-03-07   2021-03-23     0.541
+    2021-03-23 2021-04-04 2021-05-11 2021-06-19   2021-07-08     0.518
+    2021-11-12 2021-12-05 2022-01-22 2022-03-05   2022-03-23     0.631
+    2022-03-23 2022-04-09 2022-05-18 2022-06-23   2022-07-12     0.596
+    2022-07-12 2022-07-27 2022-09-05 2022-10-26   2022-11-13     0.528
+    2022-11-13 2022-12-01 2023-01-12 2023-02-22   2023-03-10     0.561
+    2023-03-10 2023-03-26 2023-05-05 2023-06-13   2023-07-02     0.606
+    2023-10-27 2023-11-26 2024-02-06 2024-03-23   2024-04-17     0.598
+ prominence                 season crop_year green_up_to_peak_days
+      0.095      Wet season (MT-I) 2018/2019                    33
+      0.088   Dry season I (MT-II) 2018/2019                    29
+      0.118      Wet season (MT-I) 2019/2020                    79
+      0.072   Dry season I (MT-II) 2019/2020                    34
+      0.087      Wet season (MT-I) 2020/2021                    60
+      0.031   Dry season I (MT-II) 2020/2021                    37
+      0.187      Wet season (MT-I) 2021/2022                    48
+      0.116   Dry season I (MT-II) 2021/2022                    39
+      0.048 Dry season II (MT-III) 2021/2022                    40
+      0.126      Wet season (MT-I) 2022/2023                    42
+      0.170   Dry season I (MT-II) 2022/2023                    40
+      0.077      Wet season (MT-I) 2023/2024                    72
+ cycle_length_days complete
+                73    FALSE
+               153     TRUE
+               116     TRUE
+                76     TRUE
+                96     TRUE
+                76     TRUE
+                90     TRUE
+                75     TRUE
+                91     TRUE
+                83     TRUE
+                79     TRUE
+               118     TRUE
+
+Crop cycles per agricultural year (Sep-Aug), complete years only:
+
+2019/2020 2020/2021 2021/2022 2022/2023 2023/2024 
+        2         2         3         2         1 
+
+Median timing by season type (all detected cycles):
+  Wet season (MT-I)        n = 6 | peak around 30 Jan | median green-up to peak 54 days | median peak NDVI 0.61
+  Dry season I (MT-II)     n = 5 | peak around 11 May | median green-up to peak 37 days | median peak NDVI 0.57
+  Dry season II (MT-III)   n = 1 | peak around 05 Sep | median green-up to peak 40 days | median peak NDVI 0.53
+
+==============================================================================
+3. RAINFALL AND THE START OF THE WET-SEASON CROP
+==============================================================================
+Annual rainfall (CHIRPS, regency mean, mm; approximate from 10-day sums):
+  year rain_mm
+1 2019    1645
+2 2020    2375
+3 2021    2535
+4 2022    2779
+5 2023    1896
+6 2024    2081
+
+Mean monthly rainfall 2019-2024 (mm):
+ month_name rain_mm
+        Jan     372
+        Feb     344
+        Mar     307
+        Apr     197
+        May     117
+        Jun      73
+        Jul      35
+        Aug      21
+        Sep      44
+        Oct      85
+        Nov     244
+        Dec     380
+
+Rainy-season onset and green-up of the wet-season crop:
+ season_start_year rain_onset wet_green_up lag_days
+              2019 2019-11-27   2019-12-08       11
+              2020 2020-10-22   2020-12-01       40
+              2021 2021-10-27   2021-12-05       39
+              2022 2022-10-02   2022-12-01       60
+              2023 2023-11-16   2023-11-26       10
+              2024 2024-10-31         <NA>       NA
+
+Lowest smoothed NDVI in each dry season (Aug-Dec):
+ year min_NDVI       date
+ 2019    0.254 2019-10-28
+ 2020    0.362 2020-10-31
+ 2021    0.396 2021-11-12
+ 2022    0.421 2022-11-13
+ 2023    0.280 2023-10-27
+ 2024    0.384 2024-10-23
+
+==============================================================================
+4. FIGURES
+==============================================================================
+
+Share of cropland without cloud-free data in the monthly 2023 maps:
+  January  February     March     April       May      June      July    August 
+    0.015     0.403     0.008     0.001     0.000     0.000     0.000     0.000 
+September   October  November  December 
+    0.000     0.000     0.001     0.000 
+
+Spearman correlation, annual rainfall vs dry-season minimum NDVI (n = 6): rho = 0.94, p = 0.017
+
+==============================================================================
+SESSION INFO
+==============================================================================
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 24.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+[1] C
+
+time zone: Asia/Bangkok
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] sf_1.0-15       terra_1.7-65    patchwork_1.2.0 ggplot2_3.4.4  
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5        cli_3.6.2          rlang_1.1.3        KernSmooth_2.23-22
+ [5] DBI_1.2.2          generics_0.1.3     textshaping_0.3.7  labeling_0.4.3    
+ [9] glue_1.7.0         colorspace_2.1-0   e1071_1.7-14       ragg_1.2.7        
+[13] scales_1.3.0       fansi_1.0.5        grid_4.3.3         munsell_0.5.0     
+[17] classInt_0.4-10    tibble_3.2.1       lifecycle_1.0.4    compiler_4.3.3    
+[21] dplyr_1.1.4        codetools_0.2-19   Rcpp_1.0.12        pkgconfig_2.0.3   
+[25] farver_2.1.1       systemfonts_1.0.5  R6_2.5.1           class_7.3-22      
+[29] tidyselect_1.2.0   utf8_1.2.4         pillar_1.9.0       magrittr_2.0.3    
+[33] tools_4.3.3        proxy_0.4-27       withr_2.5.0        gtable_0.3.4      
+[37] units_0.8-5       
